@@ -2,8 +2,7 @@ import qrcode
 import qrcode.constants
 
 class Functions:
-
-    def generate(text: str, filename: str = 'qr_code.png'):
+    def generate(self, text: str, filename: str = 'qr_code.png'):
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -17,5 +16,5 @@ class Functions:
         image.save(filename)
         print(f'QR code generate as {filename}')
 
-        
+
 
