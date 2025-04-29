@@ -1,8 +1,8 @@
 from fastapi import Depends, HTTPException
 from jose import JWTError
 from sqlalchemy.orm import Session
-from app.auth import oauth2_scheme, jwt, SECRET_KEY, ALGORITHM
-from app.database import get_db
+from app.services.auth import oauth2_scheme, jwt, SECRET_KEY, ALGORITHM
+from app.core.database import get_db
 from app.models import UserDB
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):

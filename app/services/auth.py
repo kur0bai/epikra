@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer
-from app.database import get_db
+from app.core.database import get_db
 from sqlalchemy.orm import Session
 from app.models import UserDB
 
