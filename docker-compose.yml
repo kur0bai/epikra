@@ -3,6 +3,8 @@ version: "3.9"
 services:
   fastapi:
     build: .
+    volumes:
+      - .:/app
     ports:
       - "80:80"
     env_file:
@@ -26,5 +28,5 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-volumes:
+volumes: 
   pgdata:
