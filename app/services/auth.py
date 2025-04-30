@@ -4,7 +4,7 @@ from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer
 from app.core.database import get_db
 from sqlalchemy.orm import Session
-from app.models import UserDB
+from app.models.user import User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/token")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -18,8 +18,8 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(password):
     return pwd_context.hash(password)
 
-def get_user(db: Session, username: str):
-    return db.query(UserDB).filter(UserDB.username == username).first()
+def get_user(db: Session, email: str):
+    return db.query(User).filter(User.email == email).first()
 
 def authenticate_user(db: Session, username: str, password: str):
     user = get_user(db, username)

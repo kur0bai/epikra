@@ -3,7 +3,7 @@ from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.dependencies import get_current_user
-from app.schemas import QRCreate
+from app.schemas.qr import QRCreate
 from app.services.qrs import create_qr, generate_qr_image
 
 router = APIRouter()

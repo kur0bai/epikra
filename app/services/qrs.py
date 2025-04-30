@@ -3,7 +3,7 @@ from fastapi.responses import StreamingResponse
 import qrcode
 from sqlalchemy.orm import Session
 from app.models.qr import QR
-from app.schemas import QRCreate
+from app.schemas.qr import QRCreate
        
 def create_qr(db: Session, qr: QRCreate, user_id: int):
     db_qr = QR(data=qr.data, user_id=user_id)

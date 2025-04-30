@@ -8,12 +8,7 @@ Base.metadata.create_all(bind=engine)
 
 # documentation hehe
 app = FastAPI(swagger_ui_parameters={"syntaxHighlight": False})
-app = FastAPI()
 
 # basic routing
 app.include_router(users.router)
 app.include_router(public.router)
-
-@app.get("/")
-def read_root():
-    return {"message": "Hello World"}
