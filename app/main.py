@@ -1,3 +1,9 @@
+
+from wait_for_db import wait_for_postgres
+
+# helper for wait for postgress connection
+wait_for_postgres()
+
 from fastapi import FastAPI
 from app.routes import public, users
 from app.core.database import engine

@@ -31,3 +31,5 @@ archive.zip
 
 *.env
 .env*
+
+alembic/versions*
