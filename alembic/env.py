@@ -15,15 +15,13 @@ config = context.config
 fileConfig(config.config_file_name)
 
 # DATABASE URL
-DATABASE_URL = URL.create(
-    drivername="postgresql+psycopg2",
-    username=os.getenv("POSTGRES_USER"),
-    password=os.getenv("POSTGRES_PASSWORD"),
-    host=os.getenv("POSTGRES_HOST", "localhost"),
-    port=os.getenv("POSTGRES_PORT", "5432"),
-    database=os.getenv("POSTGRES_DB"),
-)
+POSTGRES_USER = os.getenv("POSTGRES_USER")
+POSTGRES_PASSWORD= os.getenv("POSTGRES_PASSWORD")
+POSTGRES_HOST = os.getenv("POSTGRES_HOST")
+POSTGRES_PORT = os.getenv("POSTGRES_PORT")
+POSTGRES_DB = os.getenv("POSTGRES_DB")
 
+DATABASE_URL = f'postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}'
 
 config.set_main_option("sqlalchemy.url", str(DATABASE_URL))
 
@@ -31,7 +29,6 @@ target_metadata = Base.metadata
 
 #run migrations
 def run_migrations_online():
-    print('ESEEEEE =====> ', os.getenv("POSTGRES_PASSWORD"))
     connectable = engine_from_config(
         config.get_section(config.config_ini_section),
         prefix="sqlalchemy.",
