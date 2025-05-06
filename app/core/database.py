@@ -1,4 +1,3 @@
-import os
 from sqlalchemy import URL, create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base, Session
 from app.core.config import settings

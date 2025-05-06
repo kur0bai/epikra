@@ -2,7 +2,7 @@
 from app.middlewares.logging_middleware import LoggingMiddleware
 from app.models.user import Base
 from app.core.database import engine
-from app.routes import public, users, auth
+from app.routes import private, users, auth
 from fastapi import FastAPI, Request
 from app.core.logger import logger
 from wait_for_db import wait_for_postgres
@@ -14,12 +14,14 @@ wait_for_postgres()
 Base.metadata.create_all(bind=engine)
 
 # documentation hehe
-app = FastAPI(swagger_ui_parameters={"syntaxHighlight": False})
+app = FastAPI(swagger_ui_parameters={"syntaxHighlight": False}, title="Qreath0r",
+    description="A free API for creating and reading custom QR codes",
+    version="1.0.0")
 
 # Middleware for logging
 app.add_middleware(LoggingMiddleware)
 
 # basic routing
 app.include_router(users.router)
-app.include_router(public.router)
+app.include_router(private.router)
 app.include_router(auth.router)

@@ -35,3 +35,4 @@ def register(user_in: UserCreate, db: Session = Depends(get_db)):
 @router.post("/auth/logout")
 def logout():
     return {"message": "Logout successful"}
+
