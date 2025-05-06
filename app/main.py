@@ -2,7 +2,7 @@
 from app.middlewares.logging_middleware import LoggingMiddleware
 from app.models.user import Base
 from app.core.database import engine
-from app.routes import public, users
+from app.routes import public, users, auth
 from fastapi import FastAPI, Request
 from app.core.logger import logger
 from wait_for_db import wait_for_postgres
