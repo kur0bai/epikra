@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timezone
 from sqlalchemy import Column, DateTime, String
 import uuid
 from app.core.database import Base
@@ -18,6 +18,6 @@ class User(Base):
     full_name = Column(String, unique=True, nullable=True)
     password = Column(String)
     profile_picture = Column(String, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow,
-                        onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=datetime.now(timezone.utc),
+                        onupdate=datetime.now(timezone.utc))

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timezone
 import uuid
 from app.core.database import Base
 from sqlalchemy import DateTime, String, Column
@@ -21,9 +21,9 @@ class Category(Base):
     slug = Column(String, index=True, unique=True, max=250)
     description = Column(String, index=True,
                          nullable=True, max=300)  # optional
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow,
-                        onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=datetime.now(timezone.utc),
+                        onupdate=datetime.now(timezone.utc))
 
     posts = relationship("Post", secondary=post_category,
                          back_populates="categories")

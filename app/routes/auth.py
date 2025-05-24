@@ -11,19 +11,23 @@ from app.services.users import create_user
 
 router = APIRouter()
 
+
 @router.post("/auth/login", response_model=Token)
 def login_for_access_token(form_data: LoginData = Depends(), db: Session = Depends(get_db)):
     user = authenticate_user(db, form_data.email, form_data.password)
     if not user:
-        raise HTTPException(status_code=401, detail="Invalid username or password")
-    
+        raise HTTPException(
+            status_code=401, detail="Invalid username or password")
+
     expires_delta = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(data={"sub": user.email}, expires_delta=expires_delta)
+    access_token = create_access_token(
+        data={"sub": user.email}, expires_delta=expires_delta)
     return {
         "access_token": access_token,
         "token_type": "bearer",
         "expires_in": int(expires_delta.total_seconds())
     }
+
 
 @router.post("/auth/register", response_model=User)
 def register(user_in: UserCreate, db: Session = Depends(get_db)):
@@ -32,7 +36,7 @@ def register(user_in: UserCreate, db: Session = Depends(get_db)):
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+
 @router.post("/auth/logout")
 def logout():
     return {"message": "Logout successful"}
-

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timezone
 import uuid
 from sqlalchemy import Column, DateTime, String, Text
 from sqlalchemy.orm import relationship
@@ -28,11 +28,11 @@ class Post(Base):
         default=lambda: str(uuid.uuid4())
     )
     title = Column(String, index=True, max=250)
-    slug = Column(String, index=True, unique=True, max=250)
+    slug = Column(String, index=True, unique=True, max=200)
     content = Column(Text)
     status = Column(String, index=True, default=PostStatus.DRAFT)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow,
-                        onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=datetime.now(timezone.utc),
+                        onupdate=datetime.now(timezone.utc))
     categories = relationship("Category", secondary=post_category,
                               back_populates="posts")  # add relation

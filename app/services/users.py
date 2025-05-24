@@ -26,7 +26,7 @@ def create_user(db: Session, user: UserCreate) -> User:
         raise ValueError("Email already registered.")
     except Exception as ex:
         db.rollback()
-        logger.exception("❌ Internal error creating the user.")
+        logger.exception(f"❌ Internal error creating the user. {ex}")
         raise ValueError("Internal error creating the User.")
 
 
