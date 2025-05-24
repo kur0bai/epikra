@@ -1,9 +1,11 @@
 from sqlalchemy import Table, Column, Integer, ForeignKey
-from app.db.session import Base
+from app.core.database import Base
 
 """ 
-We can have different categories for posts, many to many ;)
+    We can have different categories for posts, many to many ;)
 """
+
+
 post_category = Table(
     "post_category",
     Base.metadata,
