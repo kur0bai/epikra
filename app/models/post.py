@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship
 from app.core.database import Base
 from enum import Enum
 
-from app.models import post_category
+from app.models.post_category import post_category
 
 """
     Post model with categories to handle the relationship with categories.
@@ -27,8 +27,8 @@ class Post(Base):
         index=True,
         default=lambda: str(uuid.uuid4())
     )
-    title = Column(String, index=True, max=250)
-    slug = Column(String, index=True, unique=True, max=200)
+    title = Column(String(250), index=True)
+    slug = Column(String(200), index=True, unique=True)
     content = Column(Text)
     status = Column(String, index=True, default=PostStatus.DRAFT)
     created_at = Column(DateTime, default=datetime.now(timezone.utc))

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 from app.core.database import get_db
@@ -7,17 +7,19 @@ from app.services.auth import get_current_user
 from app.schemas.qr import QRCreate
 from app.services.qrs import create_qr, generate_qr_image
 
-#protecting route
+# protecting route
 router = APIRouter(
     prefix="/private",
     tags=["Private"],
     dependencies=[Depends(get_current_user)]
 )
 
+
 @router.post("/generate", response_class=StreamingResponse)
-def generate_qr(qr_in: QRCreate, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
+def generate_qr(qr_in: QRCreate, db: Session = Depends(get_db),
+                current_user=Depends(get_current_user)):
     create_qr(db, qr_in, current_user.id)
-    return generate_qr_image(qr_in.data)    
+    return generate_qr_image(qr_in.data)
 
 
 @router.get("/profile")

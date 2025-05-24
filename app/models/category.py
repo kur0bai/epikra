@@ -4,7 +4,7 @@ from app.core.database import Base
 from sqlalchemy import DateTime, String, Column
 from sqlalchemy.orm import relationship
 
-from app.models import post_category
+from app.models.post_category import post_category
 
 """
     Category model for the database.
@@ -17,13 +17,12 @@ class Category(Base):
     __tablename__ = "categories"
     id = Column(String, primary_key=True, index=True,
                 default=lambda: str(uuid.uuid4()))
-    name = Column(String, index=True, max=250)
-    slug = Column(String, index=True, unique=True, max=250)
-    description = Column(String, index=True,
-                         nullable=True, max=300)  # optional
+    name = Column(String(250), index=True)
+    slug = Column(String(200), index=True, unique=True)
+    description = Column(String(300), index=True,
+                         nullable=True, default="")  # optional
     created_at = Column(DateTime, default=datetime.now(timezone.utc))
     updated_at = Column(DateTime, default=datetime.now(timezone.utc),
                         onupdate=datetime.now(timezone.utc))
-
     posts = relationship("Post", secondary=post_category,
                          back_populates="categories")

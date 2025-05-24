@@ -1,4 +1,5 @@
 import random
+import string
 import unicodedata
 import re
 
@@ -40,8 +41,14 @@ def generate_slug(title: str):
     unique_slug = base_slug
     counter_times = 0
     max_attempts = 50
-    is_unique = False
     db: Session = Depends(get_db)
-    while is_unique is not True and counter_times < max_attempts:
+    while counter_times < max_attempts:
         post = get_post_by_slug(db, unique_slug)
-    return None
+        if not post:
+            return unique_slug
+        # if exists create another with random suffix
+        random_suffix = ''.join(random.choices(
+            string.ascii_lowercase + string.digits, k=6))
+        unique_slug = f"{base_slug}-{random_suffix}"
+        counter_times += 1
+    raise Exception("No se pudo generar un slug único tras varios intentos.")

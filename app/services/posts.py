@@ -24,13 +24,13 @@ def create_post(db: Session, post: PostCreate):
 
         db.add(db_post)
         db.commit()
-        db.refresh()
+        db.refresh(db_post)
         logger.info(f"✅ Post created: {post.title}")
         return db_post
     except Exception as ex:
         db.rollback()
-        logger.exception(f"❌ Internal error creating the user. {ex}")
-        raise ValueError("Internal error creating the User.")
+        logger.exception(f"❌ Internal error creating the post. {ex}")
+        raise ValueError("Internal error creating the post.")
 
 
 def get_post_by_slug(db: Session, slug: str) -> Optional[Post]:

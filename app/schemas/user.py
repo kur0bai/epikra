@@ -21,4 +21,4 @@ class User(BaseModel):
                        description="User email")
 
     class Config:
-        orm_mode: True
+        from_attributes: True

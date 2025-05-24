@@ -1,5 +1,5 @@
-import datetime
-from pydantic import BaseModel
+from datetime import datetime
+from pydantic import BaseModel, Field
 from app.models.post import PostStatus
 from typing import List
 
@@ -7,9 +7,12 @@ from app.schemas.category import Category
 
 
 class PostBase(BaseModel):
-    title: str
-    slug: str
-    content: str
+    title: str = Field(example="The AI hype in these times",
+                       description="Title or name of post")
+    slug: str = Field(example="the-ai-hype",
+                      description="Slug or URL for posts reference")
+    content: str = Field(example="",
+                         description="Post content")
     status: str = PostStatus.DRAFT
 
 
@@ -24,4 +27,4 @@ class Post(PostBase):
     categories: List[Category]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
