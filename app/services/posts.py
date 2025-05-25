@@ -1,6 +1,7 @@
 
 from typing import Optional
 from sqlalchemy.orm import Session
+from app.dependencies import generate_slug
 from app.schemas.post import PostCreate
 from app.models.post import Post
 from app.models.category import Category
@@ -14,7 +15,7 @@ from app.core.logger import logger
 def create_post(db: Session, post: PostCreate):
     db_post = Post(
         title=post.title,
-        slug=post.slug,
+        slug=generate_slug(post.title, db),
         content=post.content
     )
     try:

@@ -4,6 +4,7 @@ from app.schemas.category import CategoryCreate
 from app.models.category import Category
 from app.core.logger import logger
 from sqlalchemy.exc import IntegrityError
+from app.dependencies import generate_slug
 
 """
     Category module functions
@@ -13,7 +14,7 @@ from sqlalchemy.exc import IntegrityError
 def create_category(db: Session, category: CategoryCreate):
     db_category = Category(
         name=category.name,
-        slug=category.slug,
+        slug=generate_slug(category.name, db)  # category.slug,
     )
     try:
         db.add(db_category)

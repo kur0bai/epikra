@@ -2,10 +2,6 @@ import random
 import string
 import unicodedata
 import re
-
-from fastapi import Depends
-from app.core.database import get_db
-from app.services.posts import get_post_by_slug
 from sqlalchemy.orm import Session
 
 
@@ -26,22 +22,22 @@ def slugify(text: str):
         "ascii", "ignore").decode("utf-8")  # create a normalized text
     text = text.lower()
     text = re.sub(r'[^\w\s-]', '', text)
-    text = re.sub(r'[^\w\s-]', '', text)
+    text = re.sub(r'[\s_-]+', '-', text)
     text = text.strip('-')
 
-    max_lenght = 200
+    max_lenght = 20
     if len(text) > max_lenght:
         # validate the max length and transform if need it
-        text = text[:max_lenght]
+        text = text[:max_lenght].rstrip('-')
     return text
 
 
-def generate_slug(title: str):
+def generate_slug(title: str, db: Session):
+    from app.services.posts import get_post_by_slug  # differ import
     base_slug = slugify(title)
     unique_slug = base_slug
     counter_times = 0
     max_attempts = 50
-    db: Session = Depends(get_db)
     while counter_times < max_attempts:
         post = get_post_by_slug(db, unique_slug)
         if not post:
