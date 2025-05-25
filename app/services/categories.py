@@ -4,7 +4,7 @@ from app.schemas.category import CategoryCreate
 from app.models.category import Category
 from app.core.logger import logger
 from sqlalchemy.exc import IntegrityError
-from app.dependencies import generate_slug
+from app.dependencies.slug import generate_slug
 
 """
     Category module functions
@@ -14,7 +14,7 @@ from app.dependencies import generate_slug
 def create_category(db: Session, category: CategoryCreate):
     db_category = Category(
         name=category.name,
-        slug=generate_slug(category.name, db)  # category.slug,
+        slug=generate_slug(category.name, db)  # category.slug
     )
     try:
         db.add(db_category)
@@ -30,12 +30,3 @@ def create_category(db: Session, category: CategoryCreate):
         db.rollback()
         logger.exception(f"❌ Internal error creating the category. {ex}")
         raise ValueError("Internal error creating the category.") from ex
-
-
-""" def get_post_by_slug(db: Session, slug: str) -> Optional[Post]:
-    post = db.query(Post).filter(Post.slug == slug).first()
-    if post:
-        logger.info(f"🔍 Post found: {post}")
-    else:
-        logger.info(f"🛑 Post not found: {post}")
-    return post """
