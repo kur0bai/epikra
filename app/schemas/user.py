@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel, EmailStr, Field
 
 
@@ -12,6 +13,16 @@ class UserCreate(BaseModel):
     password: str = Field(example="securePassword123$",
                           description="User password")
     full_name: str = Field(example="John Doe", description="User full name")
+
+
+class UserDelete(BaseModel):
+    id: str = Field(example="K3is2odwmrw2s_53",
+                    description="User internal identifier")
+
+
+class UserUpdate(BaseModel):
+    full_name: Optional[str] = None
+    # email: Optional[str] = None
 
 
 class User(BaseModel):
