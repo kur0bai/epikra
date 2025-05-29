@@ -1,19 +1,19 @@
 version: "3.9"
 
 services:
-  fastapi:
+  hedo_app:
     build: .
     volumes:
       - .:/app
     ports:
-      - "80:80"
+      - "8080:8080"
     env_file:
       - .env
     depends_on:
-      - postgres
+      - hedo_db
     restart: always
 
-  postgres:
+  hedo_db:
     image: postgres:15
     container_name: fastapi_postgres_db
     restart: always
@@ -28,5 +28,5 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-volumes: 
+volumes:
   pgdata:
