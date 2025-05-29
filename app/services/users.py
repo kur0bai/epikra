@@ -1,6 +1,7 @@
-from fastapi import HTTPException, status
+from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
+from app.dependencies.permissions import is_owner_or_admin
 from app.models.user import User
 from app.schemas.user import UserCreate, UserUpdate
 from app.core.security import get_password_hash
@@ -9,7 +10,7 @@ from typing import List, Optional
 from app.dependencies.emojis import EmojiType
 
 
-""" 
+"""
     Base CRUD functions to perform the users actions
 """
 
@@ -69,7 +70,10 @@ def get_users(
         raise ValueError("Internal error fetching the users.")
 
 
-def update_user(db: Session, user_id: str, user_data: UserUpdate):
+def update_user(db: Session, user_id: str,
+                user_data: UserUpdate,
+                current_user: User = Depends(lambda: is_owner_or_admin(id)
+                                             )):
     try:
         user = db.query(User).filter(User.id == user_id).first()
         if not user:
@@ -91,7 +95,9 @@ def update_user(db: Session, user_id: str, user_data: UserUpdate):
         raise ValueError("Internal error updating the user.")
 
 
-def delete_user(db: Session, user_id: str):
+def delete_user(db: Session, user_id: str,
+                current_user: User = Depends(lambda: is_owner_or_admin(id))
+                ):
     try:
         user = db.query(User).filter(User.id == user_id).first()
         if not user:
