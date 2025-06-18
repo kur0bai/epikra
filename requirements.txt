@@ -31,3 +31,5 @@ pydantic[email]
 alembic
 python-dotenv
 loguru
+pytest
+httpx
