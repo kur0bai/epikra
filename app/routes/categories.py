@@ -6,7 +6,7 @@ from app.services.categories import create_category
 from app.dependencies.roles import require_role
 from app.models.user import UserRole
 
-router = APIRouter()
+router = APIRouter(tags=["Categories"])
 
 
 @router.post("/categories", response_model=Category)

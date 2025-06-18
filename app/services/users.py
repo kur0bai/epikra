@@ -49,6 +49,15 @@ def get_user_by_username(db: Session, email: str) -> Optional[User]:
     return user
 
 
+def get_user_by_id(db: Session, id: str) -> Optional[User]:
+    user = db.query(User).filter(User.id == id).first()
+    if user:
+        logger.info(f"{EmojiType.SEARCH} User found: {id}")
+    else:
+        logger.info(f"{EmojiType.NO_RESULTS} User not found: {id}")
+    return user
+
+
 def get_users(
     db: Session,
     skip: int = 0,

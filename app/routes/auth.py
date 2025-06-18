@@ -9,7 +9,7 @@ from datetime import timedelta
 from app.schemas.user import LoginData
 from app.services.users import create_user
 
-router = APIRouter()
+router = APIRouter(tags=["Auth"])
 
 
 @router.post("/auth/login", response_model=Token)

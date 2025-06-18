@@ -2,33 +2,13 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.dependencies.roles import require_role
 from app.models.user import UserRole
-from app.services.auth import get_current_user
 from app.schemas.user import User, UserUpdate
 from app.core.database import get_db
-from app.services.users import delete_user, get_users, update_user
+from app.services.users import delete_user, get_users, update_user, get_user_by_id
 from typing import List
 
 
 router = APIRouter(prefix="/users", tags=["Users"])
-
-
-@router.get("/me", response_model=User,
-            description="Get the authenticated user information",
-            name="Read the user profile info")
-def read_users_me(current_user: User = Depends(get_current_user)):
-    try:
-        return current_user
-    except ValueError as ex:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(ex)
-        )
-
-    except RuntimeError:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="An unexpected error occurred while getting the user."
-        )
 
 
 @router.get("/", response_model=List[User],
@@ -38,6 +18,15 @@ def read_users_me(current_user: User = Depends(get_current_user)):
 def get_all(db: Session = Depends(get_db),
             user=Depends(require_role(UserRole.ADMIN))):
     return get_users(db)
+
+
+@router.get("/{id}", response_model=User,
+            name="Get user by Id",
+            description="Get an specific user by id"
+            )
+def get_by_id(id: str, db: Session = Depends(get_db),
+              user=Depends(require_role(UserRole.ADMIN))):
+    return get_user_by_id(db, id)
 
 
 @router.patch("/{id}", response_model=User, name="Update user information")

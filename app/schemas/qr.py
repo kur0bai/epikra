@@ -2,14 +2,14 @@ from pydantic import BaseModel
 
 
 class QRCreate(BaseModel):
-    data: str
+    url: str
 
 # basic qr output
 
 
 class QRCode(BaseModel):
     id: str
-    data: str
+    url: str
     user_id: str
 
     class Config:

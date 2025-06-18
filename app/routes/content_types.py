@@ -1,16 +1,19 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.core.database import get_db
+from app.dependencies.roles import require_role
 from app.models.content_type import ContentType
+from app.models.user import UserRole
 from app.schemas.content_type import ContentTypeCreate, ContentTypeOut
 from app.services.type_registry import create_dynamic_table
 
-router = APIRouter(prefix="/content-types", tags=["Content Types"])
+router = APIRouter(tags=["Content Types"])
 
 
 @router.post("/", response_model=ContentTypeOut)
 def create_content_type(
-    content_type: ContentTypeCreate, db: Session = Depends(get_db)
+    content_type: ContentTypeCreate, db: Session = Depends(get_db),
+    user=Depends(require_role(UserRole.ADMIN))
 ):
     # Check doesnt exists
     existing = db.query(ContentType).filter_by(name=content_type.name).first()
@@ -34,5 +37,6 @@ def create_content_type(
 
 
 @router.get("/", response_model=list[ContentTypeOut])
-def list_content_types(db: Session = Depends(get_db)):
+def list_content_types(db: Session = Depends(get_db),
+                       user=Depends(require_role(UserRole.ADMIN))):
     return db.query(ContentType).all()

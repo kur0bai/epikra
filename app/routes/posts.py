@@ -4,7 +4,7 @@ from app.core.database import get_db
 from app.schemas.post import PostCreate, Post
 from app.services.posts import create_post
 
-router = APIRouter()
+router = APIRouter(tags=["Posts"])
 
 
 @router.post("/posts", response_model=Post)

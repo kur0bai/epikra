@@ -22,7 +22,6 @@ class UserDelete(BaseModel):
 
 class UserUpdate(BaseModel):
     full_name: Optional[str] = None
-    # email: Optional[str] = None
 
 
 class User(BaseModel):
