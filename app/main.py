@@ -15,8 +15,8 @@ Base.metadata.create_all(bind=engine)
 
 # documentation hehe
 app = FastAPI(swagger_ui_parameters={"syntaxHighlight": False},
-              title="Qreath0r",
-              description="API for creating and reading custom QR codes",
+              title="Epikra",
+              description="Headless, powerful and poisonless CMS API.",
               version="1.0.0")
 
 # Middleware for logging

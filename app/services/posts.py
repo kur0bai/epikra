@@ -6,7 +6,7 @@ from app.dependencies.emojis import EmojiType
 from app.dependencies.permissions import is_owner_or_admin
 from app.dependencies.slug import generate_slug
 from app.models.user import User
-from app.schemas.post import PostCreate, PostUpdate, PostDelete
+from app.schemas.post import PostCreate, PostUpdate
 from app.models.post import Post
 from app.models.category import Category
 from app.core.logger import logger
