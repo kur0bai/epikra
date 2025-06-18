@@ -20,6 +20,15 @@ class PostCreate(PostBase):
     category_ids: List[str]
 
 
+class PostUpdate(PostBase):
+    category_ids: List[str]
+
+
+class PostDelete(BaseModel):
+    id: str = Field(example="K3is2odwmrw2s_53",
+                    description="User internal identifier")
+
+
 class Post(PostBase):
     id: str
     created_at: datetime

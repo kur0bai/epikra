@@ -37,6 +37,5 @@ def create_content_type(
 
 
 @router.get("/", response_model=list[ContentTypeOut])
-def list_content_types(db: Session = Depends(get_db),
-                       user=Depends(require_role(UserRole.ADMIN))):
+def list_content_types(db: Session = Depends(get_db)):
     return db.query(ContentType).all()
