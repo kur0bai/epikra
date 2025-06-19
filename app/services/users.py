@@ -2,7 +2,7 @@ from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from app.dependencies.permissions import is_owner_or_admin
-from app.models.user import User
+from app.models.user import User, UserRole
 from app.schemas.user import UserCreate, UserUpdate
 from app.core.security import get_password_hash
 from app.core.logger import logger
@@ -17,10 +17,13 @@ from app.dependencies.emojis import EmojiType
 
 def create_user(db: Session, user: UserCreate) -> User:
     hashed_password = get_password_hash(user.password)
+    existing_users = get_users(db)
+    is_first_user = len(existing_users) == 0
     db_user = User(
         email=user.email,
         password=hashed_password,
-        full_name=user.full_name
+        full_name=user.full_name,
+        role=UserRole.ADMIN if is_first_user else UserRole.VIEWER,
     )
     try:
         db.add(db_user)
