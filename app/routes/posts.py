@@ -54,8 +54,8 @@ def create(post: PostCreate, db: Session = Depends(get_db),
 def update(id: str, post_data: PostUpdate,  db: Session = Depends(get_db),
            user=Depends(require_role(UserRole.ADMIN, UserRole.EDITOR))):
     try:
-        updated_user = update_post(db, id, post_data)
-        return updated_user
+        updated_post = update_post(db, id, post_data)
+        return updated_post
     except Exception as ex:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
