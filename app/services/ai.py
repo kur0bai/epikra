@@ -12,7 +12,7 @@ headers = {
 
 
 def improve_text(data: ContentRequest):
-    prompt = f"<s>[INST] You are a professional writing assistant, please improve this content: {data.content} [/INST]"
+    prompt = f"<s>[INST] You are a professional writting assistant, please improve this content: {data.content} [/INST]"
     response = requests.post(
         f"https://api-inference.huggingface.co/models/{HF_MODEL}",
         headers=headers,
@@ -24,6 +24,6 @@ def improve_text(data: ContentRequest):
         generated_text = result[0]["generated_text"]
         cleaned_text = generated_text.split('[/INST]')[-1].strip()
     else:
-        cleaned_text = "Ocurrió un error al generar el texto."
+        cleaned_text = "Something weng wrong improving the text"
 
     return {"improved_content": cleaned_text}
