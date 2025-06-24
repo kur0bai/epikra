@@ -9,6 +9,7 @@ Epikra is a lightweight, powerful, and extensible Headless CMS built with **Fast
 
 - ⚡ **FastAPI** as the main async backend (blazing fast)
 - 🧠 **AI-powered endpoint** to improve post content automatically
+- 🔲 **QR-generator** to share your posts like a pro
 - 🔒 **Authentication system** using JWT
 - 📝 **Automatic slug generation** (SEO-friendly)
 - 🧩 **Dynamic table creation** without manual migrations
