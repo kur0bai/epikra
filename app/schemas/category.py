@@ -12,6 +12,10 @@ class CategoryCreate(CategoryBase):
     pass
 
 
+class CategoryUpdate(CategoryBase):
+    pass
+
+
 class Category(CategoryBase):
     id: str
 

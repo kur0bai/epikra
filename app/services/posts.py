@@ -92,6 +92,15 @@ def get_post_by_slug(db: Session, slug: str) -> Optional[Post]:
     return post
 
 
+def get_post_by_id(db: Session, id: str) -> Optional[Post]:
+    post = db.query(Post).filter(Post.id == id).first()
+    if post:
+        logger.info(f"🔍 Post found: {post}")
+    else:
+        logger.info(f"🛑 Post not found: {post}")
+    return post
+
+
 def get_posts(
     db: Session,
     skip: int = 0,

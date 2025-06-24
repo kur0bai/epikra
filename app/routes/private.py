@@ -5,7 +5,9 @@ from app.core.database import get_db
 from app.services.auth import get_current_user
 from app.schemas.qr import QRCreate
 from app.services.qrs import create_qr, generate_qr_image
+from app.services.ai import improve_text
 from app.schemas.user import User
+from app.schemas.ai import ContentRequest
 
 # protecting route
 router = APIRouter(
@@ -20,6 +22,12 @@ def generate_qr(qr_in: QRCreate, db: Session = Depends(get_db),
                 current_user=Depends(get_current_user)):
     create_qr(db, qr_in, current_user.id)
     return generate_qr_image(qr_in.data)
+
+
+@router.post("/improve-content")
+def improve_content(data: ContentRequest, db: Session = Depends(get_db)):
+    response = improve_text(data)
+    return response
 
 
 @router.get("/profile", response_model=User,

@@ -33,3 +33,4 @@ python-dotenv
 loguru
 pytest
 httpx
+requests
