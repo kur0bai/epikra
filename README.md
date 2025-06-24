@@ -1,7 +1,7 @@
 
 # 🐍 Epikra CMS
 
-<center><img src="https://imgur.com/YTtEgfb.png" height="100"></center>
+<img src="https://imgur.com/YTtEgfb.png" height="100" align="center">
 
 Epikra is a lightweight, powerful, and extensible Headless CMS built with **FastAPI**,  designed to be simple to deploy and scale for people who wants the power of python for building blogs or content quickly. Ideal for developers who need flexibility and performance, with modern features such as automatic slug generation, authentication, **AI-enhanced content** endpoints using Huggingface, dynamic table creation, and full Docker + PostgreSQL support.
 
