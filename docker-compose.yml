@@ -13,6 +13,17 @@ services:
       - epikra_db
     restart: always
 
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/default.conf.d/default.conf:ro
+    depends_on:
+      - epikra_app
+    restart: always
+
   epikra_db:
     image: postgres:15
     container_name: fastapi_postgres_db
