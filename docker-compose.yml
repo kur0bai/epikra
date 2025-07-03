@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  hedo_app:
+  epikra_app:
     build: .
     volumes:
       - .:/app
@@ -10,10 +10,21 @@ services:
     env_file:
       - .env
     depends_on:
-      - hedo_db
+      - epikra_db
     restart: always
 
-  hedo_db:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/default.conf.d/default.conf:ro
+    depends_on:
+      - epikra_app
+    restart: always
+
+  epikra_db:
     image: postgres:15
     container_name: fastapi_postgres_db
     restart: always
