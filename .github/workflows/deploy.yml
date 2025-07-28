@@ -21,10 +21,19 @@ jobs:
       - name: Deploy to EC2
         run: |
           ssh ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
-            sudo apt update
-            sudo apt install -y docker.io docker-compose git
-            cd epikra || git clone https://github.com/kur0bai/epikra.git && cd epikra
-            git pull origin main
+            sudo yum update -y
+            sudo yum install -y git
+            sudo amazon-linux-extras install docker -y
+            sudo service docker start
+            sudo usermod -a -G docker ec2-user
+
+            if [ -d "epikra" ]; then
+                cd epikra
+                git pull origin main
+            else
+                git clone https://github.com/kur0bai/epikra.git
+                cd epikra
+            fi    
             docker compose down
             docker compose up -d --build
           EOF
