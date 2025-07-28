@@ -23,6 +23,6 @@ jobs:
           ssh ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
           cd epikra
           git pull origin main
-          docker-compose down
-          docker-compose up -d --build
+          docker compose down
+          docker compose up -d --build
           EOF
