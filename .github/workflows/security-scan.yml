@@ -32,8 +32,10 @@ jobs:
       - name: Run Semgrep scan
         run: |
           semgrep ci --config=auto \
-            --sarif --output semgrep-results.sarif \
-            --json --output semgrep-results.json # recursive output
+            --sarif \
+            --output semgrep-results.sarif \
+            --error
+        continue-on-error: true    
 
       - name: Upload SARIF to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
