@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epikra-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: epikra
+    template:
+      metadata:
+        labels:
+          app: epikra
+      spec:
+        containers:
+          - name: epikra
+            image: ""
+            ports:
+              - containerPort: 8080
