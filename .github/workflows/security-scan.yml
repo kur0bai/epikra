@@ -33,15 +33,18 @@ jobs:
         run: |
           semgrep ci --config=auto \
             --sarif \
-            --output semgrep-results.sarif \
-            --error
-        continue-on-error: true    
+            --output semgrep-results.sarif
 
       - name: Upload SARIF to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: semgrep-results.sarif
           wait-for-processing: true
+
+      - name: Semgrep Policy Gate
+        run: |
+          semgrep ci --config=auto --error   
 
   dast-zap:
     name: DAST - OWASP ZAP Baseline Scan
