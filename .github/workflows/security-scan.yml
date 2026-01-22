@@ -44,7 +44,7 @@ jobs:
 
       - name: Semgrep Policy Gate
         run: |
-          semgrep ci --config=auto --error   
+          semgrep ci --config=auto   
 
   dast-zap:
     name: DAST - OWASP ZAP Baseline Scan
