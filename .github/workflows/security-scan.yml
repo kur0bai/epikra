@@ -68,12 +68,20 @@ jobs:
 
       - name: Wait for app to be ready
         run: |
-          sleep 10
-          curl --fail http://localhost:8080/docs || echo "App not ready yet"
+          for i in {1..15}; do
+            if curl -sf http://localhost:8080/docs; then
+              echo "App is ready"
+              exit 0
+            fi
+            echo "Waiting for app..."
+            sleep 4
+          done
+          exit 1
 
       - name: Run OWASP ZAP Baseline Scan
         run: |
           docker run --rm \
+            --user root \
             --network host \
             -v "$PWD:/zap/wrk" \
             ghcr.io/zaproxy/zaproxy:stable \
