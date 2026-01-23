@@ -1,4 +1,5 @@
 
+import os
 from app.middlewares.logging_middleware import LoggingMiddleware
 from app.models.user import Base
 from app.core.database import engine
