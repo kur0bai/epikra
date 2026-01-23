@@ -1,5 +1,4 @@
 
-import os
 from app.middlewares.logging_middleware import LoggingMiddleware
 from app.models.user import Base
 from app.core.database import engine
@@ -9,7 +8,7 @@ from app.routes.dynamic import load_dynamic_routers
 from wait_for_db import wait_for_postgres
 
 # helper for wait for postgress connection
-if os.getenv("ENV") != "ci":
+if os.getenv("SKIP_DB_WAIT") != "true":
     from wait_for_db import wait_for_postgres
     wait_for_postgres()
 
