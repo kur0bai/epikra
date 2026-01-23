@@ -65,22 +65,41 @@ jobs:
         run: |
           docker build -t epikra-app:latest .
 
+      - name: Run Application container
+        run: | 
+          docker run -d \
+          --name epikra-running \
+          -p 8080:8080 \
+          epikra-app:latest
+
       - name: Wait for app to be ready
         run: |
           sleep 10
           curl --fail http://epikra-app:8080/docs || echo "App not ready yet"
 
       - name: Run OWASP ZAP Baseline Scan
-        uses: zaproxy/action-baseline@v0.15.0 
+        run: |
+          docker run --rm \
+            --network host \
+            ghcr.io/zaproxy/zaproxy:stable \
+            zap-baseline.py \
+              -t http://localhost:8080 \
+              -J zap-report.json \
+              -r zap-report.html \
+              -w zap-report.md         
+              
+      - name: Upload Zap Report
+        uses: actions/upload-artifact@v4
         with:
-          target: 'http://epikra-app:8080'    
-          format: 'sarif'                    
-          artifact_name: zap-baseline-report
-          fail_action: true                  
+          name: zap-baseline-report
+          path: |
+            zap-report.json
+            zap-report.html
+            zap-report.md        
 
       - name: Stop container
         if: always()
-        run: docker stop epikra-app || true
+        run: docker stop epikra-running || true
 
   security-summary:
     name: Security Summary
