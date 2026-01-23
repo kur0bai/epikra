@@ -51,12 +51,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: sast-semgrep 
 
-    services:
-      epikra-app:
-        image: epikra-app:latest
-        ports: 
-          - 8080:8080
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
