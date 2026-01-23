@@ -79,6 +79,7 @@ jobs:
           -e POSTGRES_PORT=$POSTGRES_PORT \
           -e HUGGINGFACE_API_KEY=$HUGGINGFACE_API_KEY \
           -e SKIP_DB_WAIT=true \
+          -e DATABASE_URL: "sqlite:///./ci.db" \
           epikra-app:latest
 
       - name: Wait for app to be ready
